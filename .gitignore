@@ -1,0 +1,25 @@
+cat > .gitignore <<'EOF'
+# credenciais e configuração local
+.env
+*.json.key
+*-key.json
+.df-credentials.json
+application_default_credentials.json
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# Dataform e Node
+node_modules/
+.df/
+
+# Airflow local
+airflow/logs/
+
+# sistema
+Thumbs.db
+EOF
+git add .gitignore
+git commit -m "chore: add gitignore"
