@@ -1,4 +1,3 @@
-cat > .gitignore <<'EOF'
 # credenciais e configuração local
 .env
 *.json.key
@@ -18,8 +17,8 @@ node_modules/
 # Airflow local
 airflow/logs/
 
+# dados extraídos localmente (backfill histórico)
+data/
+
 # sistema
 Thumbs.db
-EOF
-git add .gitignore
-git commit -m "chore: add gitignore"
