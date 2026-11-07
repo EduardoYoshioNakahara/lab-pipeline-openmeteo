@@ -129,4 +129,3 @@ print(json.dumps(results, indent=2, default=str))
 dbutils.jobs.taskValues.set(key="failed", value=failed)
 if len(failed) == len(results):
     raise RuntimeError(f"Todas as cidades falharam: {failed}")
- 
