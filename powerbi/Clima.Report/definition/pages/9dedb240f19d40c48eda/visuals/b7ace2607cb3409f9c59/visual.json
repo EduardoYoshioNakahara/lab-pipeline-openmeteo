@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "b7ace2607cb3409f9c59",
+  "position": {
+    "x": 960,
+    "y": 190,
+    "z": 1008,
+    "height": 92,
+    "width": 296,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "% dias com chuva"
+                }
+              },
+              "queryRef": "Clima Diário.% dias com chuva",
+              "nativeQueryRef": "% dias com chuva"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

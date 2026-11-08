@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Clima"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "48416b3d-982c-4319-9879-60dd5d05ab93"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "52335df35d354560b0d0",
+  "position": {
+    "x": 336,
+    "y": 190,
+    "z": 1006,
+    "height": 92,
+    "width": 296,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Temp. mín. média (°C)"
+                }
+              },
+              "queryRef": "Clima Diário.Temp. mín. média (°C)",
+              "nativeQueryRef": "Temp. mín. média (°C)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

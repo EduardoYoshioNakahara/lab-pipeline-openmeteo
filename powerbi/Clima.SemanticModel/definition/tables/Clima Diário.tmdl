@@ -1,0 +1,166 @@
+table 'Clima Diário'
+	lineageTag: 75cdf546-61bd-4dc4-a047-26e101fbd182
+
+	measure 'Temp. máx. média (°C)' = AVERAGE('Clima Diário'[Temp. máx. (°C)])
+		formatString: 0.0
+		lineageTag: 3a061199-d85f-4d62-b6ba-1d9723a43ecc
+
+	measure 'Temp. mín. média (°C)' = AVERAGE('Clima Diário'[Temp. mín. (°C)])
+		formatString: 0.0
+		lineageTag: d7bb88f6-5b21-4e8e-9da4-69c62d558ed3
+
+	measure 'Amplitude média (°C)' = AVERAGE('Clima Diário'[Amplitude (°C)])
+		formatString: 0.0
+		lineageTag: 8290bf0d-54fb-4eaa-9388-bd2c1979a0ab
+
+	measure 'Recorde de calor (°C)' = MAX('Clima Diário'[Temp. máx. (°C)])
+		formatString: 0.0
+		lineageTag: 7beb3c41-1eb8-4d2b-a19c-0df71540fd2a
+
+	measure 'Chuva total (mm)' = SUM('Clima Diário'[Chuva (mm)])
+		formatString: #,0
+		lineageTag: 79767783-76a4-451f-b618-3f48b906a9d1
+
+	measure 'Chuva média mensal (mm)' = AVERAGEX(VALUES(Calendario[Início do mês]), [Chuva total (mm)])
+		formatString: #,0
+		lineageTag: 5bd5d2e8-9e85-448c-8722-3d6147b5da62
+
+	measure 'Dias observados' = COUNTROWS('Clima Diário')
+		formatString: #,0
+		lineageTag: 02a9fe03-b7da-4bf2-b110-50ee703aa622
+
+	measure 'Dias com chuva' = CALCULATE(COUNTROWS('Clima Diário'), 'Clima Diário'[Dia chuvoso] = TRUE())
+		formatString: #,0
+		lineageTag: efafaa1e-70b1-40a4-a3df-40b1fa14026d
+
+	measure '% dias com chuva' = DIVIDE([Dias com chuva], [Dias observados])
+		formatString: 0.0%
+		lineageTag: 5f25d5b3-2084-48a3-a6ee-2bd7c3f24a24
+
+	measure 'Última atualização' = MAX('Clima Diário'[Atualizado em])
+		formatString: General Date
+		lineageTag: 312f35e7-5580-4ec1-b09b-37b7ba44b786
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d052db59-09dd-47b2-8c68-f838e2d827a0
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_source
+		dataType: string
+		isHidden
+		lineageTag: c5c408aa-a5c1-44ff-8610-62e201de4136
+		summarizeBy: none
+		sourceColumn: data_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cidade
+		dataType: string
+		lineageTag: 4444cc49-123e-4174-97c4-6267fd123984
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column UF
+		dataType: string
+		lineageTag: 91c08296-93a3-462b-9da4-3b57373ce459
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Região
+		dataType: string
+		lineageTag: 1b083f79-a213-49f2-9e27-165f69f257ad
+		summarizeBy: none
+		sourceColumn: Região
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Temp. máx. (°C)'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 87717e86-91e5-457c-85d1-e3c660c7fa91
+		summarizeBy: none
+		sourceColumn: Temp. máx. (°C)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Temp. mín. (°C)'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 6e640318-c24c-4555-bc18-289c11c7fafc
+		summarizeBy: none
+		sourceColumn: Temp. mín. (°C)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Amplitude (°C)'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 601cefa0-6ae4-4bf0-9af4-506158793b65
+		summarizeBy: none
+		sourceColumn: Amplitude (°C)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Chuva (mm)'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 564f0435-4ea5-4c8a-ae9a-32ddff9af0f7
+		summarizeBy: none
+		sourceColumn: Chuva (mm)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia chuvoso'
+		dataType: boolean
+		lineageTag: fbbee2de-6799-4894-ae36-56ea56ce5e3f
+		summarizeBy: none
+		sourceColumn: Dia chuvoso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Condição
+		dataType: string
+		lineageTag: e8dd5678-cf1e-4ea4-8dbe-93566ac151e4
+		summarizeBy: none
+		sourceColumn: Condição
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Atualizado em'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4fdc997e-4afb-46bf-bc08-a31dbe7a9dea
+		summarizeBy: none
+		sourceColumn: Atualizado em
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Clima Diário' = m
+		mode: import
+		source =
+				let
+				    Fonte = Databricks.Catalogs(DatabricksHost, DatabricksHttpPath, [Catalog = null, Database = null, EnableAutomaticProxyDiscovery = null]),
+				    Catalogo = Fonte{[Name = "workspace"]}[Data],
+				    Schema = Catalogo{[Name = "visualization_weather"]}[Data],
+				    View = Schema{[Name = "vw_daily_weather"]}[Data],
+				    Tipos = Table.TransformColumnTypes(View, {{"date", type date}, {"temperature_max_c", type number}, {"temperature_min_c", type number}, {"temperature_range_c", type number}, {"precipitation_mm", type number}, {"is_rainy_day", type logical}, {"updated_control", type datetime}}),
+				    Traducao = [clear = "Céu limpo", cloudy = "Nublado", fog = "Neblina", rain = "Chuva", snow = "Neve", showers = "Pancadas", thunderstorm = "Tempestade", unknown = "Desconhecido"],
+				    ComCondicao = Table.AddColumn(Tipos, "Condição", each if [weather_group] = null then "Desconhecido" else Record.FieldOrDefault(Traducao, [weather_group], "Desconhecido"), type text),
+				    SemCodigo = Table.RemoveColumns(ComCondicao, {"weather_group"}),
+				    Renomeadas = Table.RenameColumns(SemCodigo, {{"date", "Data"}, {"city_name", "Cidade"}, {"state", "UF"}, {"region", "Região"}, {"temperature_max_c", "Temp. máx. (°C)"}, {"temperature_min_c", "Temp. mín. (°C)"}, {"temperature_range_c", "Amplitude (°C)"}, {"precipitation_mm", "Chuva (mm)"}, {"is_rainy_day", "Dia chuvoso"}, {"updated_control", "Atualizado em"}})
+				in
+				    Renomeadas
+
+	annotation PBI_ResultType = Table
+

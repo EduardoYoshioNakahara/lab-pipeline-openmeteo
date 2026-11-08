@@ -1,0 +1,4 @@
+relationship 157a94e3-be98-48a8-85d0-c6a369117325
+	fromColumn: 'Clima Diário'.Data
+	toColumn: Calendario.Data
+
