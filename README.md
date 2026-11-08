@@ -4,6 +4,8 @@ Pipeline de dados ponta a ponta sobre a API pública do [Open-Meteo](https://ope
 
 O foco não é o clima: é o desenho de um pipeline que **não perde dado em silêncio**. Cada decisão abaixo tem um teste que provoca a falha que ela evita.
 
+![Relatório Power BI sobre a camada de consumo](docs/relatorio.png)
+
 ## Arquitetura
 
 ```mermaid
@@ -31,6 +33,15 @@ flowchart LR
 | Silver | `silver_weather_context.computed_daily_weather` | Regras de negócio: renomeia, calcula amplitude, dia chuvoso e grupo do tempo |
 | Gold | `gold_weather_context.fat_daily_weather`, `dim_locations` | Fato enxuta com chave de controle (`sha1`) e `updated_control`; dimensão de cidades |
 | Consumo | `visualization_weather.vw_daily_weather` | View pronta para BI |
+| Relatório | [`powerbi/Clima.pbip`](powerbi/) | Power BI em formato PBIP (modelo TMDL + relatório PBIR), lendo a view pelo SQL warehouse |
+
+## Relatório
+
+Projeto Power BI versionado como texto em [`powerbi/`](powerbi/): o modelo semântico em TMDL e o relatório em PBIR, então cada mudança de medida ou de visual aparece no diff do PR.
+
+- **Modelo:** `Clima Diário` (a view, com colunas em português e a condição do tempo traduzida), `Calendario` marcada como tabela de datas e medidas explícitas (implícitas desligadas).
+- **Página:** filtros de período e cidade, quatro indicadores, temperatura máxima mensal por cidade, chuva média por mês do ano (sazonalidade) e dias por condição do tempo.
+- **Conexão:** conector Databricks com dois parâmetros, `DatabricksHost` e `DatabricksHttpPath`. A credencial (token pessoal) fica no Power BI Desktop, nunca no arquivo.
 
 ## Orquestração
 
@@ -99,6 +110,8 @@ databricks/
   90_final_status.py                  falha alta se alguma cidade ficou de fora
 scripts/backfill_historical.py        carga única do histórico, na máquina local
 validation/                           consultas de saúde do pipeline
+powerbi/                              relatório Power BI (PBIP: TMDL + PBIR)
+docs/                                 imagens do README
 .github/workflows/                    sincroniza o Git folder do Databricks a cada merge na main
 ```
 
@@ -109,11 +122,11 @@ validation/                           consultas de saúde do pipeline
 3. Na máquina local: `pip install requests pyarrow` e `python scripts/backfill_historical.py`. Suba os arquivos de `data/historical_upload/` para `landing/_upload` e rode `databricks/02_place_historical`.
 4. Rode `01_extract_openmeteo` com as cidades no widget `cities`, depois `10_bronze_daily_weather` com `full_refresh = true`, e em seguida `20`, `21` e `30`.
 5. Crie o Job com as tarefas do diagrama de orquestração, fonte Git na branch `main`.
+6. Para o relatório: abra `powerbi/Clima.pbip` no Power BI Desktop, preencha os parâmetros com o *Server hostname* e o *HTTP path* do SQL warehouse (SQL Warehouses → Connection details) e entre com um token pessoal do Databricks.
 
 Nenhuma credencial fica no repositório: o token do GitHub fica no Databricks, e o host e o token do Databricks ficam nos *secrets* do GitHub Actions.
 
 ## Próximos passos
 
 - Versionar o próprio Job como código com Databricks Asset Bundles e fazer o deploy pelo GitHub Actions.
-- Painel no Databricks sobre a `vw_daily_weather`.
 - Checagem de contagem entre execuções, para pegar perda no começo da série.
