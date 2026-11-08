@@ -1,0 +1,17 @@
+name: sync-databricks-git-folder
+on:
+  push:
+    branches: [main]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: databricks/setup-cli@main
+      - name: Atualiza o Git folder na main
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks repos update \
+            "/Workspace/Users/eduardo.y.nakahara@gmail.com/lab-pipeline-openmeteo" \
+            --branch main
