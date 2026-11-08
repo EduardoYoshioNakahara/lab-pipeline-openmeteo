@@ -1,0 +1,69 @@
+table Calendario
+	lineageTag: 1b10468d-548c-47df-9510-26884ccb28a9
+	dataCategory: Time
+
+	column Data
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: e0927eb7-f254-44b2-856a-003b39d9b72f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Data]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 95836366-3099-474f-bf6d-bae92515c0dc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês nº'
+		dataType: int64
+		formatString: 0
+		lineageTag: d4815a66-2d5f-4cb5-8144-beb3a78cb5b8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mês nº]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: string
+		lineageTag: c64ff4fc-e44f-4e59-8229-d9e75ea6e16d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mês]
+		sortByColumn: 'Mês nº'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Início do mês'
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: 6ec39fd3-3343-4622-ba87-b1d8d57d6360
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Início do mês]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario = calculated
+		mode: import
+		source =
+				VAR _base = CALENDAR(MIN('Clima Diário'[Data]), MAX('Clima Diário'[Data]))
+				RETURN
+				SELECTCOLUMNS(
+				    _base,
+				    "Data", [Date],
+				    "Ano", YEAR([Date]),
+				    "Mês nº", MONTH([Date]),
+				    "Mês", FORMAT([Date], "mmm"),
+				    "Início do mês", DATE(YEAR([Date]), MONTH([Date]), 1)
+				)
+

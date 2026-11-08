@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "5bdd5a3e752d46959058",
+  "position": {
+    "x": 648,
+    "y": 190,
+    "z": 1007,
+    "height": 92,
+    "width": 296,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Recorde de calor (°C)"
+                }
+              },
+              "queryRef": "Clima Diário.Recorde de calor (°C)",
+              "nativeQueryRef": "Recorde de calor (°C)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

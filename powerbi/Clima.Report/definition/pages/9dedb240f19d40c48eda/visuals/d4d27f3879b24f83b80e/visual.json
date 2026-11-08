@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "d4d27f3879b24f83b80e",
+  "position": {
+    "x": 856,
+    "y": 296,
+    "z": 1011,
+    "height": 410,
+    "width": 400,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Condição"
+                }
+              },
+              "queryRef": "Clima Diário.Condição",
+              "nativeQueryRef": "Condição",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Dias observados"
+                }
+              },
+              "queryRef": "Clima Diário.Dias observados",
+              "nativeQueryRef": "Dias observados"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Clima Diário"
+                  }
+                },
+                "Property": "Dias observados"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dias por condição do tempo'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -20,5 +20,9 @@ airflow/logs/
 # dados extraídos localmente (backfill histórico)
 data/
 
+# Power BI (PBIP): cache de dados e configurações locais
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
 # sistema
 Thumbs.db

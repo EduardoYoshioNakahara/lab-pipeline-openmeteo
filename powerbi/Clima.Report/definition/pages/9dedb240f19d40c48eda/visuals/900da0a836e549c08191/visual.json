@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "900da0a836e549c08191",
+  "position": {
+    "x": 24,
+    "y": 296,
+    "z": 1009,
+    "height": 200,
+    "width": 816,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendario"
+                    }
+                  },
+                  "Property": "Início do mês"
+                }
+              },
+              "queryRef": "Calendario.Início do mês",
+              "nativeQueryRef": "Início do mês",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Temp. máx. média (°C)"
+                }
+              },
+              "queryRef": "Clima Diário.Temp. máx. média (°C)",
+              "nativeQueryRef": "Temp. máx. média (°C)"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clima Diário"
+                    }
+                  },
+                  "Property": "Cidade"
+                }
+              },
+              "queryRef": "Clima Diário.Cidade",
+              "nativeQueryRef": "Cidade"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Temperatura máxima média por mês (°C)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
